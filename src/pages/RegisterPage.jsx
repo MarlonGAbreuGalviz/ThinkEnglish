@@ -84,13 +84,22 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="login-page">
-      <section className="recovery-panel">
-        <form className="login-card" onSubmit={handleSubmit} noValidate>
+    <main className="login-page auth-page-polished">
+      <section className="login-panel">
+        <div className="login-brand auth-brand-panel">
+          <span className="brand-mark">TM</span>
           <div>
+            <p className="eyebrow">Registro docente</p>
+            <h1>Únete al panel académico</h1>
+            <p>Solicita acceso para administrar contenidos de inglés. La cuenta quedará pendiente hasta que un administrador la active.</p>
+          </div>
+        </div>
+
+        <form className="login-card auth-form-card register-card" onSubmit={handleSubmit} noValidate>
+          <div className="auth-card-header">
             <span className="mini-label">Registro de docentes</span>
             <h2>Crear cuenta</h2>
-            <p className="helper-text">La cuenta quedará pendiente hasta que un administrador la active.</p>
+            <p className="helper-text">Completa tus datos institucionales para solicitar acceso.</p>
           </div>
 
           <div className="form-row register-name-row">
@@ -105,6 +114,7 @@ export default function RegisterPage() {
               />
               {submitted && errors.name && <small className="field-error">{errors.name}</small>}
             </label>
+
             <label>
               Apellido
               <input
@@ -165,16 +175,17 @@ export default function RegisterPage() {
           </label>
 
           {error && <p className="form-alert">{error}</p>}
-          {success && (
-            <p className="success-alert">Tu cuenta fue registrada, pero aún está pendiente de activación.</p>
-          )}
+          {success && <p className="success-alert">Tu cuenta fue registrada, pero aún está pendiente de activación.</p>}
 
-          <button className="button primary full" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Creando cuenta...' : 'Crear cuenta docente'}
-          </button>
-          <button type="button" className="button ghost dark full" onClick={() => navigate('/login')}>
-            Volver al inicio de sesión
-          </button>
+          <div className="auth-button-stack">
+            <button className="button primary full" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Creando cuenta...' : 'Crear cuenta docente'}
+            </button>
+
+            <button type="button" className="button ghost dark full" onClick={() => navigate('/login')}>
+              Volver al inicio de sesión
+            </button>
+          </div>
         </form>
       </section>
     </main>

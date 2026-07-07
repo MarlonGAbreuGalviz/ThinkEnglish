@@ -1,0 +1,281 @@
+PROMPT — VERSION BACKEND READY EDUMANAGER ENGLISH
+
+Trabaja sobre la version frontend lista para backend de EduManager English usando React + Vite + JavaScript.
+
+Objetivo:
+Crear o actualizar una version frontend lista para conectarse a un backend real mas adelante. Esta version NO debe usar datos de prueba, NO debe usar localStorage para contenidos y NO debe inventar informacion si la API todavia no existe. Solo debe dejar pantallas, formularios, rutas, servicios y entradas preparadas.
+
+Base visual:
+Usa como referencia visual la version localStorage, porque esa version fue aprobada visualmente. Mantener la misma estetica, espaciados, tarjetas, header, sidebar, formularios, modales, botones, estados vacios y distribucion general.
+
+Importante:
+- No copiar la logica de localStorage para contenidos.
+- No usar mockData.
+- No precargar subcategorias, niveles ni ejercicios.
+- No crear datos falsos cuando el backend no responda.
+- Si la API no responde, mostrar loading, error o estado vacio controlado.
+- No implementar logica de negocio real en frontend.
+- La seguridad real, permisos, cascadas y validaciones definitivas pertenecen al backend.
+- La interfaz visible debe estar en espanol.
+- Variables, funciones, servicios, archivos y propiedades internas deben estar en ingles.
+- No mostrar textos como mock, demo, datos de prueba, localStorage, en memoria o usuarios simulados.
+
+Identidad visual:
+- Azul marino: #002855 o #002B5C
+- Amarillo: #FDB913
+- Blanco
+- Gris claro
+- Texto oscuro
+
+Configuracion:
+Crear archivo .env.example con:
+VITE_API_URL=http://localhost:3000/api
+
+Crear cliente HTTP central:
+src/services/apiClient.js
+
+apiClient debe:
+- Leer VITE_API_URL.
+- Agregar Authorization: Bearer token cuando exista sesion.
+- Manejar errores 401 cerrando sesion y redirigiendo al login.
+- Manejar errores de red sin romper la app.
+- Entregar errores controlados para mostrarlos en pantalla.
+
+Servicios API esperados:
+
+1. authApiService.js
+Funciones:
+- login(credentials)
+- registerUser(data)
+- requestPasswordReset(email)
+- logout()
+
+Endpoints preparados:
+- POST /auth/login
+- POST /auth/register
+- POST /auth/forgot-password
+
+2. categoryApiService.js
+Funciones:
+- getMainCategory()
+- updateMainCategory(data)
+- getCategoryTree()
+- getCategoryById(id)
+- createCategory(data)
+- updateCategory(id, data)
+- deleteCategory(id)
+
+Endpoints preparados:
+- GET /categories/main
+- PUT /categories/main
+- GET /categories/tree
+- GET /categories/:id
+- POST /categories
+- PUT /categories/:id
+- DELETE /categories/:id
+
+3. levelApiService.js
+Funciones:
+- getLevelsByCategory(categoryId)
+- createLevel(data)
+- updateLevel(id, data)
+- deleteLevel(id)
+
+Endpoints preparados:
+- GET /categories/:categoryId/levels
+- POST /levels
+- PUT /levels/:id
+- DELETE /levels/:id
+
+4. exerciseApiService.js
+Funciones:
+- getExercisesByLevel(levelId)
+- createExercise(data)
+- updateExercise(id, data)
+- deleteExercise(id)
+
+Endpoints preparados:
+- GET /levels/:levelId/exercises
+- POST /exercises
+- PUT /exercises/:id
+- DELETE /exercises/:id
+
+Modelos esperados:
+
+User:
+{
+  id,
+  name,
+  email,
+  role
+}
+
+Session:
+{
+  user,
+  token,
+  rememberMe,
+  expiresAt
+}
+
+Category:
+{
+  id,
+  name,
+  parentId,
+  isMain
+}
+
+Level:
+{
+  id,
+  name,
+  order,
+  categoryId
+}
+
+Exercise:
+{
+  id,
+  title,
+  statement,
+  score,
+  levelId
+}
+
+Login:
+- Campos: email, password.
+- Checkbox Recordarme.
+- Link: ¿Olvidaste tu contraseña?
+- Link: ¿No tienes cuenta aun? Crear cuenta.
+- Boton: Entrar al panel.
+- Enviar POST /auth/login.
+- Guardar sesion en sessionStorage si Recordarme no esta marcado.
+- Guardar sesion en localStorage si Recordarme esta marcado.
+- Guardar solo sesion, nunca contenidos.
+
+Registro:
+Pantalla /register con:
+- name
+- email
+- password
+- confirmPassword
+
+Validaciones basicas frontend:
+- campos obligatorios
+- email valido
+- password minimo 6 caracteres
+- confirmPassword debe coincidir
+
+Enviar a POST /auth/register.
+No asignar role desde frontend. El role debe venir desde backend.
+Despues de registro exitoso, mostrar mensaje y volver al login.
+
+Recuperar cuenta:
+Pantalla /forgot-password con:
+- email
+- boton Enviar instrucciones
+- mensaje generico: Si el correo esta registrado, recibiras instrucciones para recuperar tu cuenta.
+
+Enviar a POST /auth/forgot-password.
+No confirmar si el email existe.
+
+Pantalla categoria principal:
+- Consultar GET /categories/main.
+- No crear categoria principal desde frontend.
+- Si no llega informacion, mostrar error o estado vacio controlado.
+- Mantener estructura visual de la version localStorage.
+- Mostrar tarjeta superior de categoria principal.
+- Mostrar resumen dinamico si la API lo entrega o si se puede calcular desde datos cargados.
+- Boton Editar nombre.
+- El cambio de nombre debe ser inline debajo del boton, no modal.
+- Guardar con PUT /categories/main.
+- No mostrar boton Eliminar en categoria principal.
+
+Pantalla jerarquia:
+- Usar GET /categories/tree.
+- Mostrar arbol limpio basado en parentId.
+- Categoria principal con etiqueta Principal.
+- No mostrar Eliminar en categoria principal.
+- Subcategorias con Ver, Editar nombre, Nueva subcategoria y Eliminar.
+- Eliminar debe pedir confirmacion.
+- El backend decide cascada o restricciones; el frontend solo advierte.
+
+Niveles:
+- Mostrar niveles por categoria desde GET /categories/:categoryId/levels.
+- Ordenar por order.
+- No mostrar botones Subir/Bajar.
+- No usar input libre para order.
+- Al crear nivel, enviar name y categoryId. Si se envia order sugerido, debe quedar comentado que el backend valida el orden final.
+
+Ejercicios:
+- Mostrar ejercicios desde GET /levels/:levelId/exercises.
+- Crear/editar con title, statement, score, levelId.
+- statement es textarea, obligatorio, maximo 5000 caracteres, contador x / 5000.
+- score debe ser entero entre 1 y 100.
+- No permitir letras, negativos, cero, decimales, notacion cientifica ni mayores a 100.
+- Estas validaciones son de interfaz; backend valida definitivamente.
+
+Roles:
+- role viene desde backend.
+- ADMIN: puede ver, crear, editar y eliminar todo excepto eliminar categoria principal.
+- DOCENTE: puede ver y crear/editar ejercicios, pero no eliminar categorias.
+- Esto solo controla la interfaz. La seguridad real debe estar en backend.
+
+Estados obligatorios:
+Todas las pantallas deben manejar:
+- loading
+- error
+- empty state
+- success message
+- confirm dialog antes de eliminar
+
+Rutas sugeridas:
+- /login
+- /register
+- /forgot-password
+- /dashboard o /
+- /categories/main
+- /categories/tree
+- /categories/:id
+- /categories/:id/levels
+- /levels/:id/exercises
+
+Estructura recomendada:
+src/
+  services/
+    apiClient.js
+    authApiService.js
+    categoryApiService.js
+    levelApiService.js
+    exerciseApiService.js
+  context/
+    AuthContext.jsx
+  routes/
+    ProtectedRoute.jsx
+  pages/
+    LoginPage.jsx
+    RegisterPage.jsx
+    ForgotPasswordPage.jsx
+    MainCategoryPage.jsx
+    CategoryTreePage.jsx
+    CategoryDetailPage.jsx
+  components/
+    Header.jsx
+    Sidebar.jsx
+    Breadcrumb.jsx
+    CategoryCard.jsx
+    CategoryTree.jsx
+    LevelList.jsx
+    ExerciseList.jsx
+    CategoryInlineEdit.jsx
+    CategoryModal.jsx
+    LevelModal.jsx
+    ExerciseModal.jsx
+    ConfirmDialog.jsx
+    EmptyState.jsx
+    LoadingState.jsx
+    ErrorState.jsx
+
+Resultado esperado:
+Una version frontend backend-ready limpia, sin datos de prueba, visualmente igual a la version localStorage aprobada, con servicios y endpoints preparados para una API real futura, pero sin ejecutar logica de negocio en frontend.

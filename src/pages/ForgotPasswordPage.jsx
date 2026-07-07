@@ -34,13 +34,22 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <main className="login-page">
-      <section className="recovery-panel">
-        <div className="login-card">
+    <main className="login-page auth-page-polished">
+      <section className="login-panel">
+        <div className="login-brand auth-brand-panel">
+          <span className="brand-mark">TM</span>
           <div>
+            <p className="eyebrow">Recuperación de acceso</p>
+            <h1>Volvamos a conectar</h1>
+            <p>Ingresa tu correo docente institucional y recibirás instrucciones para recuperar el acceso al panel.</p>
+          </div>
+        </div>
+
+        <div className="login-card auth-form-card recovery-card">
+          <div className="auth-card-header">
             <span className="mini-label">Recuperación de acceso</span>
             <h2>Recuperar cuenta</h2>
-            <p className="helper-text">Ingresa tu correo docente institucional para recibir instrucciones.</p>
+            <p className="helper-text">Usa el correo asociado a tu cuenta docente.</p>
           </div>
 
           <form className="form-grid" onSubmit={handleSubmit} noValidate>
@@ -59,17 +68,14 @@ export default function ForgotPasswordPage() {
               )}
             </label>
 
-            {success && (
-              <p className="success-alert">
-                Si el correo está registrado, recibirás instrucciones para recuperar tu cuenta.
-              </p>
-            )}
+            {success && <p className="success-alert">Si el correo está registrado, recibirás instrucciones para recuperar tu cuenta.</p>}
             {error && <p className="form-alert">{error}</p>}
 
-            <div className="modal-actions">
+            <div className="modal-actions auth-actions-row">
               <button type="button" className="button ghost dark" onClick={() => navigate('/login')}>
                 Volver al inicio de sesión
               </button>
+
               <button className="button primary" type="submit" disabled={isSubmitting}>
                 {isSubmitting ? 'Enviando...' : 'Enviar instrucciones'}
               </button>

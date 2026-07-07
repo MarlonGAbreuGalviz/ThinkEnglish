@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import Modal from './Modal.jsx';
 
+const MAX_TITLE_LENGTH = 80;
 const MAX_STATEMENT_LENGTH = 5000;
 const scorePattern = /^(100|[1-9][0-9]?)$/;
 
@@ -18,14 +19,15 @@ export default function ExerciseModal({ levels, exercise, selectedLevelId, onClo
   const errors = useMemo(() => {
     const title = form.title.trim();
     const statement = form.statement.trim();
+
     return {
       title:
         !title
           ? 'El título es obligatorio.'
           : title.length < 3
             ? 'El título debe tener al menos 3 caracteres.'
-            : title.length > 120
-              ? 'El título no puede superar 120 caracteres.'
+            : title.length > MAX_TITLE_LENGTH
+              ? `El título no puede superar ${MAX_TITLE_LENGTH} caracteres.`
               : '',
       levelId: form.levelId ? '' : 'Selecciona un nivel.',
       score: scorePattern.test(form.score) ? '' : 'Ingresa un número entero entre 1 y 100.',
@@ -33,14 +35,17 @@ export default function ExerciseModal({ levels, exercise, selectedLevelId, onClo
         !statement
           ? 'El enunciado es obligatorio.'
           : form.statement.length > MAX_STATEMENT_LENGTH
-            ? 'El enunciado no puede superar 5000 caracteres.'
+            ? `El enunciado no puede superar ${MAX_STATEMENT_LENGTH} caracteres.`
             : ''
     };
   }, [form]);
+
   const hasErrors = Object.values(errors).some(Boolean);
 
   const updateField = (field, value) => {
     if (field === 'score' && !/^\d{0,3}$/.test(value)) return;
+    if (field === 'title' && value.length > MAX_TITLE_LENGTH) return;
+
     setForm((current) => ({ ...current, [field]: value }));
     setSubmitError('');
   };
@@ -49,9 +54,11 @@ export default function ExerciseModal({ levels, exercise, selectedLevelId, onClo
     event.preventDefault();
     setSubmitted(true);
     setSubmitError('');
+
     if (hasErrors) return;
 
     setIsSubmitting(true);
+
     try {
       await onSave({
         id: exercise?.id,
@@ -67,6 +74,8 @@ export default function ExerciseModal({ levels, exercise, selectedLevelId, onClo
     }
   };
 
+  const titleCounterClass = form.title.length >= MAX_TITLE_LENGTH ? 'counter is-warning' : 'counter';
+
   return (
     <Modal title={exercise ? 'Editar ejercicio' : 'Nuevo ejercicio'} onClose={onClose}>
       <form className="form-grid" onSubmit={handleSubmit} noValidate>
@@ -75,10 +84,13 @@ export default function ExerciseModal({ levels, exercise, selectedLevelId, onClo
           <input
             className={submitted && errors.title ? 'invalid' : ''}
             value={form.title}
-            maxLength={120}
+            maxLength={MAX_TITLE_LENGTH}
             onChange={(event) => updateField('title', event.target.value)}
             placeholder="Ej: Present simple"
           />
+          <span className={titleCounterClass}>
+            {form.title.length} / {MAX_TITLE_LENGTH}
+          </span>
           {submitted && errors.title && <small className="field-error">{errors.title}</small>}
         </label>
 
@@ -98,6 +110,7 @@ export default function ExerciseModal({ levels, exercise, selectedLevelId, onClo
             </select>
             {submitted && errors.levelId && <small className="field-error">{errors.levelId}</small>}
           </label>
+
           <label>
             Puntaje
             <input
@@ -120,7 +133,9 @@ export default function ExerciseModal({ levels, exercise, selectedLevelId, onClo
             onChange={(event) => updateField('statement', event.target.value)}
             placeholder="Describe la actividad que verá el estudiante..."
           />
-          <span className="counter">{form.statement.length} / {MAX_STATEMENT_LENGTH}</span>
+          <span className="counter">
+            {form.statement.length} / {MAX_STATEMENT_LENGTH}
+          </span>
           {submitted && errors.statement && <small className="field-error">{errors.statement}</small>}
         </label>
 

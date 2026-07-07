@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useRouter } from '../routes/RouterContext.jsx';
 import { isValidEmail } from '../utils/formValidation.js';
-import { testAccounts } from '../data/testData.js';
 
 export default function LoginPage() {
   const { login, isAuthenticated } = useAuth();
@@ -26,12 +25,6 @@ export default function LoginPage() {
     setForm((current) => ({ ...current, [field]: value }));
   };
 
-  const useTestAccount = (account) => {
-    setForm({ email: account.email, password: account.password, rememberMe: false });
-    setSubmitted(false);
-    setError('');
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitted(true);
@@ -51,9 +44,9 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="login-page">
+    <main className="login-page auth-page-polished">
       <section className="login-panel">
-        <div className="login-brand">
+        <div className="login-brand auth-brand-panel">
           <span className="brand-mark">TM</span>
           <div>
             <p className="eyebrow">Duoc UC · English AI</p>
@@ -62,10 +55,11 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <form className="login-card" onSubmit={handleSubmit} noValidate>
-          <div>
+        <form className="login-card auth-form-card" onSubmit={handleSubmit} noValidate>
+          <div className="auth-card-header">
             <span className="mini-label">Acceso privado</span>
             <h2>Iniciar sesión</h2>
+            <p className="helper-text">Ingresa con tus credenciales institucionales para continuar.</p>
           </div>
 
           <label>
@@ -80,6 +74,7 @@ export default function LoginPage() {
             />
             {submitted && errors.email && <small className="field-error">Ingresa un correo válido.</small>}
           </label>
+
           <label>
             Contraseña
             <input
@@ -102,29 +97,13 @@ export default function LoginPage() {
               />
               Recordarme
             </label>
+
             <button type="button" className="text-button" onClick={() => navigate('/forgot-password')}>
               ¿Olvidaste tu contraseña?
             </button>
           </div>
 
           {error && <p className="form-alert">{error}</p>}
-
-          <div className="test-access-panel">
-            <span className="mini-label">Accesos de prueba</span>
-            <div className="test-access-grid">
-              {testAccounts.map((account) => (
-                <button
-                  key={account.user.id}
-                  type="button"
-                  className="button secondary"
-                  onClick={() => useTestAccount(account)}
-                >
-                  Usar {account.user.role}
-                </button>
-              ))}
-            </div>
-            <small>Selecciona un rol y luego presiona “Entrar al panel”.</small>
-          </div>
 
           <button className="button primary full" type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Ingresando...' : 'Entrar al panel'}

@@ -1201,3 +1201,708 @@ th {
     grid-template-columns: 1fr;
   }
 }
+
+/* Visual polish patch - ThinkEnglish Manager */
+:root {
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --shadow-soft: 0 18px 46px rgba(0, 40, 85, 0.12);
+  --shadow-strong: 0 24px 70px rgba(0, 40, 85, 0.22);
+}
+
+.auth-page-polished {
+  min-height: 100vh;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 500px);
+  background:
+    radial-gradient(circle at 18% 22%, rgba(253, 185, 19, 0.14), transparent 28%),
+    linear-gradient(135deg, var(--navy) 0%, #003a70 51%, var(--gray-50) 51%);
+}
+
+.auth-brand-panel {
+  animation: fadeSlideIn 0.55s ease both;
+}
+
+.auth-brand-panel .brand-mark {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
+}
+
+.auth-form-card {
+  width: min(420px, calc(100% - 48px));
+  justify-self: center;
+  border: 1px solid rgba(217, 224, 234, 0.9);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-strong);
+  gap: 18px;
+  animation: cardPopIn 0.42s ease both;
+}
+
+.register-card {
+  width: min(520px, calc(100% - 48px));
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.recovery-card {
+  width: min(460px, calc(100% - 48px));
+}
+
+.auth-card-header {
+  display: grid;
+  gap: 8px;
+  padding-bottom: 4px;
+}
+
+.auth-card-header h2,
+.auth-card-header p {
+  margin: 0;
+}
+
+.auth-button-stack {
+  display: grid;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.auth-actions-row {
+  margin-top: 8px;
+}
+
+.test-access-panel,
+.test-access-grid {
+  display: none !important;
+}
+
+.button {
+  min-height: 42px;
+  border-radius: var(--radius-sm);
+  padding: 11px 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  line-height: 1.1;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0, 40, 85, 0.12);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  box-shadow: none;
+}
+
+.button.primary:hover:not(:disabled) {
+  background: #ffc533;
+}
+
+.button.secondary:hover:not(:disabled),
+.button.ghost:hover:not(:disabled),
+.button.subtle:hover:not(:disabled) {
+  border-color: rgba(0, 40, 85, 0.18);
+  background: #f8fafc;
+}
+
+.button.danger:hover:not(:disabled) {
+  background: #991b1b;
+}
+
+.button.subtle,
+.button.ghost.dark {
+  background: var(--gray-50);
+  color: var(--navy);
+  border-color: var(--gray-200);
+}
+
+.button.compact {
+  min-height: 38px;
+  padding: 9px 14px;
+}
+
+.text-button:hover {
+  text-decoration: underline;
+}
+
+.form-grid,
+.form-dialog,
+.inline-form {
+  display: grid;
+  gap: 18px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+input,
+select,
+textarea {
+  min-height: 44px;
+  border-radius: var(--radius-sm);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: #b8c4d4;
+}
+
+input.invalid,
+select.invalid,
+textarea.invalid {
+  border-color: var(--danger);
+  background: #fff8f7;
+}
+
+.helper-text {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.success-alert,
+.form-alert,
+.field-error {
+  line-height: 1.4;
+}
+
+.success-alert,
+.form-alert {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+}
+
+.success-alert {
+  background: #ecfdf3;
+}
+
+.form-alert {
+  background: #fff4f2;
+}
+
+.card,
+.tree-shell,
+.levels-panel,
+.exercise-panel,
+.stat-card,
+.hero-panel,
+.category-card,
+.node-card,
+.level-card,
+.level-item,
+.hierarchy-card {
+  border-radius: var(--radius-md);
+}
+
+.card,
+.tree-shell,
+.levels-panel,
+.exercise-panel,
+.hero-panel {
+  box-shadow: 0 12px 32px rgba(0, 40, 85, 0.06);
+}
+
+.page-stack {
+  gap: 26px;
+}
+
+.section-heading,
+.detail-header,
+.panel-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22px;
+  margin-bottom: 20px;
+}
+
+.action-row,
+.table-actions,
+.modal-actions,
+.node-actions,
+.hierarchy-actions,
+.dialog-actions,
+.main-actions-panel {
+  gap: 14px;
+}
+
+.action-row,
+.table-actions,
+.node-actions,
+.hierarchy-actions,
+.main-actions-panel {
+  align-items: center;
+}
+
+.table-actions,
+.modal-actions,
+.dialog-actions {
+  justify-content: flex-end;
+}
+
+.inline-form-wide {
+  max-width: 720px;
+  padding: 18px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  background: white;
+  box-shadow: 0 12px 28px rgba(0, 40, 85, 0.06);
+}
+
+.inline-form-wide .action-row {
+  justify-content: flex-end;
+}
+
+.category-layout {
+  gap: 24px;
+}
+
+.levels-panel,
+.exercise-panel {
+  padding: 26px;
+}
+
+.level-list {
+  gap: 14px;
+}
+
+.level-item {
+  padding: 16px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+
+.level-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0, 40, 85, 0.08);
+}
+
+.level-video-panel {
+  margin: 22px 0;
+  padding: 18px;
+  border-radius: var(--radius-md);
+}
+
+.empty-state {
+  padding: 28px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+}
+
+.modal-backdrop,
+.dialog-backdrop {
+  padding: 28px;
+  background: rgba(15, 23, 42, 0.62);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.18s ease both;
+}
+
+.modal,
+.dialog {
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: 0 30px 80px rgba(0, 20, 44, 0.28);
+  animation: modalEnter 0.24s ease both;
+}
+
+.modal-header {
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.icon-button {
+  border-radius: var(--radius-sm);
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.icon-button:hover {
+  transform: rotate(3deg) scale(1.04);
+  background: var(--gray-50);
+}
+
+.password-requirements {
+  gap: 8px 18px;
+  margin: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes cardPopIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 980px) {
+  .auth-page-polished {
+    grid-template-columns: 1fr;
+    background: linear-gradient(180deg, var(--navy) 0%, #003a70 38%, var(--gray-50) 38%);
+  }
+
+  .auth-brand-panel {
+    padding: 34px 24px 12px;
+    color: white;
+  }
+
+  .auth-brand-panel .eyebrow {
+    color: var(--yellow);
+  }
+
+  .auth-brand-panel h1 {
+    font-size: 36px;
+  }
+
+  .auth-brand-panel p {
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .auth-form-card,
+  .register-card,
+  .recovery-card {
+    width: calc(100% - 36px);
+    margin: 18px;
+    max-height: none;
+  }
+
+  .category-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .levels-panel {
+    position: static;
+  }
+
+  .section-heading,
+  .detail-header,
+  .panel-heading {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .action-row,
+  .table-actions,
+  .modal-actions,
+  .node-actions,
+  .hierarchy-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 560px) {
+  .auth-brand-panel h1 {
+    font-size: 30px;
+  }
+
+  .login-card,
+  .auth-form-card {
+    padding: 24px;
+  }
+
+  .button,
+  .modal-actions .button,
+  .action-row .button,
+  .table-actions .button {
+    width: 100%;
+  }
+
+  .modal,
+  .dialog {
+    padding: 22px;
+  }
+}
+
+.category-layout {
+  grid-template-columns: minmax(260px, 330px) minmax(0, 1fr);
+  align-items: start;
+}
+
+.levels-panel,
+.exercise-panel,
+.tree-shell,
+.card,
+.hero-panel,
+.content-section {
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Panel izquierdo de niveles */
+.level-list,
+.level-card-grid,
+.category-card-grid,
+.tree-list {
+  min-width: 0;
+}
+
+.level-item {
+  min-width: 0;
+  overflow: hidden;
+  white-space: normal;
+}
+
+.level-item strong,
+.level-item span,
+.level-item small {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+}
+
+/* Encabezado del panel de ejercicios */
+.panel-heading,
+.detail-header,
+.section-heading {
+  min-width: 0;
+}
+
+.panel-heading > div,
+.detail-header > div,
+.section-heading > div {
+  min-width: 0;
+}
+
+.panel-heading h2,
+.panel-heading h3,
+.detail-header h2,
+.detail-header h3,
+.section-heading h2,
+.section-heading h3 {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.25;
+}
+
+/* Mantiene los botones ordenados cuando el título es largo */
+.panel-heading .action-row,
+.detail-header .action-row,
+.section-heading .action-row {
+  flex-shrink: 0;
+  justify-content: flex-end;
+}
+
+/* Video / aviso de video sin romper ancho */
+.level-video-panel {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.level-video-panel p,
+.level-video-panel strong,
+.level-video-panel span {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Tabla de ejercicios: evita desbordes horizontales feos */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-md, 14px);
+}
+
+table {
+  table-layout: fixed;
+}
+
+th,
+td {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+td strong,
+td p,
+td span {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Columna de título del ejercicio */
+.exercise-title-cell,
+td:first-child {
+  max-width: 420px;
+}
+
+.exercise-title-cell strong,
+td:first-child strong {
+  display: block;
+  max-width: 100%;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Columna de acciones más ordenada */
+.table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: 0;
+}
+
+.table-actions .button {
+  min-width: 96px;
+}
+
+/* Modal: evita que textos largos se salgan */
+.modal,
+.dialog {
+  max-width: calc(100vw - 40px);
+  overflow: hidden;
+}
+
+.modal p,
+.dialog p,
+.modal strong,
+.dialog strong,
+.confirm-box,
+.confirm-box p,
+.confirm-box strong {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+}
+
+/* Modal de eliminación: texto más limpio */
+.confirm-box {
+  display: grid;
+  gap: 18px;
+}
+
+.confirm-box p {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.confirm-box strong {
+  display: inline;
+  color: var(--navy);
+}
+
+/* Inputs y textarea dentro del modal */
+.modal input,
+.modal select,
+.modal textarea,
+.dialog input,
+.dialog select,
+.dialog textarea {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Botones del modal con más aire */
+.modal-actions,
+.dialog-actions {
+  margin-top: 10px;
+  gap: 14px;
+}
+
+/* Si el texto es muy largo en un input, que no agrande nada */
+input,
+textarea,
+select {
+  min-width: 0;
+}
+
+/* Mejor estado visual cuando una tarjeta está activa */
+.level-item.active {
+  box-shadow: 0 10px 24px rgba(253, 185, 19, 0.12);
+}
+
+/* Ajuste responsive */
+@media (max-width: 980px) {
+  .category-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-heading .action-row,
+  .detail-header .action-row,
+  .section-heading .action-row {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .table-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 560px) {
+  .modal,
+  .dialog {
+    max-width: calc(100vw - 24px);
+  }
+
+  .modal-actions,
+  .dialog-actions,
+  .table-actions {
+    width: 100%;
+  }
+
+  .modal-actions .button,
+  .dialog-actions .button,
+  .table-actions .button {
+    width: 100%;
+  }
+}
